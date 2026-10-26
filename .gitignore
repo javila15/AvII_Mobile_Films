@@ -1,0 +1,19 @@
+# Arquivos de build e saída do Android Studio
+*.apk
+*.aar
+*.ap_
+*.aab
+/build/
+/out/
+
+# Configurações locais (como o caminho do SDK)
+local.properties
+
+# Arquivos de IDE (IntelliJ / Android Studio)
+.idea/
+.gradle/
+*.iml
+.DS_Store
+
+# Pasta de capturas de tela do emulator
+/captures/
