@@ -1,0 +1,30 @@
+package com.example.listadefilmes.util
+
+object FilmeValidator {
+
+    data class ValidationResult(
+        val isValid: Boolean,
+        val errorMessage: String = ""
+    )
+
+    fun validate(titulo: String, genero: String, duracaoStr: String): ValidationResult {
+        if (titulo.isBlank()) {
+          return ValidationResult(false, "Preencha o título do filme!")
+        }
+
+        if (genero.isBlank()) {
+          return ValidationResult(false, "Preencha o gênero do filme!")
+        }
+
+        val duracao = duracaoStr.toIntOrNull()
+        if (duracao == null) {
+          return ValidationResult(false, "Preencha a duração apenas com números inteiros (em minutos)!")
+        }
+
+        if (duracao <= 0) {
+          return ValidationResult(false, "A duração do filme precisa ser maior que zero!")
+        }
+
+        return ValidationResult(true)
+    }
+}
