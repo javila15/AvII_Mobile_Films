@@ -18,7 +18,7 @@ import com.example.listadefilmes.model.Filme
 class FormularioFilmeActivity : AppCompatActivity() {
 
     companion object {
-        // Chave usada pela lista para mandar o id do filme a ser editado
+        
         const val EXTRA_ID = "filme_id"
     }
 
@@ -30,7 +30,7 @@ class FormularioFilmeActivity : AppCompatActivity() {
     private lateinit var btnExcluir: Button
 
     private lateinit var dao: FilmeDAO
-    private var filmeId = 0   // 0 = novo filme, > 0 = edição
+    private var filmeId = 0   
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class FormularioFilmeActivity : AppCompatActivity() {
         btnSalvar = findViewById(R.id.btnSalvar)
         btnExcluir = findViewById(R.id.btnExcluir)
 
-        // Se veio um id pelo Intent, é edição: busca o filme e preenche os campos
+        
         filmeId = intent.getIntExtra(EXTRA_ID, 0)
         if (filmeId > 0) {
             val filme = dao.getFilmeById(filmeId)
@@ -74,7 +74,6 @@ class FormularioFilmeActivity : AppCompatActivity() {
         btnExcluir.setOnClickListener { confirmarExclusao() }
     }
 
-    // Todos os campos são obrigatórios
     private fun validarCampos(): Boolean {
         var valido = true
 
@@ -102,7 +101,7 @@ class FormularioFilmeActivity : AppCompatActivity() {
         return valido
     }
 
-    // Inclui (id = 0) ou atualiza (id > 0), conforme o modo da tela
+   
     private fun salvar() {
         if (!validarCampos()) return
 
