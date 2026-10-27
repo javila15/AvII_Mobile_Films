@@ -1,0 +1,19 @@
+package com.example.listadefilmes.util
+
+import com.example.listadefilmes.model.Filme
+
+fun List<Filme>.ordenarAlfabeticamente(): List<Filme> {
+    return this.sortedBy { it.nome.trim().lowercase() }
+}
+
+fun List<Filme>.filtrarPorNome(query: String): List<Filme> {
+    if (query.isBlank()) return this
+    return this.filter { it.nome.contains(query.trim(), ignoreCase = true) }
+}
+
+fun List<Filme>.filtrarPorGenero(generoFiltro: String): List<Filme> {
+    if (generoFiltro.isBlank() || generoFiltro.equals("Todos", ignoreCase = true)) {
+        return this
+    }
+    return this.filter { it.genero.equals(generoFiltro.trim(), ignoreCase = true) }
+}
