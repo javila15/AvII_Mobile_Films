@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
         dao = FilmeDAO(this)
         listView = findViewById(R.id.lvFilmes)
 
-        // Botão "Novo filme": abre o formulário vazio
+     
         findViewById<Button>(R.id.btnNovoFilme).setOnClickListener {
             startActivityForResult(Intent(this, FormularioFilmeActivity::class.java), 1)
         }
 
-        // Clique em um filme da lista: abre o formulário para editar
+   
         listView.setOnItemClickListener { _, _, position, _ ->
             val filme = filmes[position]
             val intent = Intent(this, FormularioFilmeActivity::class.java)
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, filmes)
     }
 
-    // Quando volta do formulário (salvou ou excluiu), atualiza a lista
+   
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
