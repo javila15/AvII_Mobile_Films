@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ListaDeFilmes</string>
+    <string name="lista_sem_filmes">Nenhum filme cadastrado.</string>
+    <string name="lista_sem_resultados">Nenhum filme encontrado com esses critérios.</string>
+</resources>
