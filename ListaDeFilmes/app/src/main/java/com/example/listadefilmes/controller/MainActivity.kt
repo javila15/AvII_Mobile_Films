@@ -1,21 +1,55 @@
 package com.example.listadefilmes.controller
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.listadefilmes.R
+import com.example.listadefilmes.data.dao.FilmeDAO
+import com.example.listadefilmes.model.Filme
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var dao: FilmeDAO
+    private lateinit var listView: ListView
+    private var filmes: List<Filme> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        dao = FilmeDAO(this)
+        listView = findViewById(R.id.lvFilmes)
+
+        // Botão "Novo filme": abre o formulário vazio
+        findViewById<Button>(R.id.btnNovoFilme).setOnClickListener {
+            startActivityForResult(Intent(this, FormularioFilmeActivity::class.java), 1)
+        }
+
+        // Clique em um filme da lista: abre o formulário para editar
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val filme = filmes[position]
+            val intent = Intent(this, FormularioFilmeActivity::class.java)
+            intent.putExtra(FormularioFilmeActivity.EXTRA_ID, filme.id)
+            startActivityForResult(intent, 1)
+        }
+
+        carregarLista()
+    }
+
+    private fun carregarLista() {
+        filmes = dao.getAllFilmes()
+        listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, filmes)
+    }
+
+    // Quando volta do formulário (salvou ou excluiu), atualiza a lista
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            carregarLista()
         }
     }
 }
